@@ -1,0 +1,140 @@
+{
+	"info": {
+		"_postman_id": "22000444-ad8e-4008-89bf-68c6420a426e",
+		"name": "e-KYCv1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "register",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ab202d58-6435-44f8-a146-1896db6321d1",
+						"exec": [
+							"var data=\"\";",
+							"var d= new Date();",
+							"var messageid=d.getYear()+\"\"+ d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds()+d.getMilliseconds();",
+							"console.log(messageid);",
+							"data += messageid + pm.environment.get('sharedkey');",
+							"console.log(data);",
+							"",
+							"var encryption = CryptoJS.enc.Base64.stringify(CryptoJS.SHA256(data));",
+							"console.log(encryption);",
+							"pm.environment.set(\"securekey\", encryption);",
+							"pm.environment.set(\"messageid\", messageid);",
+							"//postman.setGlobalVariable(\"authdigest\", encryption);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "acquirerid",
+						"value": "{{acquirerid}}",
+						"type": "text"
+					},
+					{
+						"key": "securekey",
+						"value": "{{securekey}}",
+						"type": "text"
+					},
+					{
+						"key": "verification_emirate",
+						"value": "Sharjah",
+						"type": "text"
+					},
+					{
+						"key": "verification_area",
+						"value": "Majaz",
+						"type": "text"
+					},
+					{
+						"key": "verification_channel",
+						"value": "MOBILE",
+						"type": "text"
+					},
+					{
+						"key": "verification_ref_no",
+						"value": "12347",
+						"type": "text"
+					},
+					{
+						"key": "verification_coordinates",
+						"value": "10.22,11.555",
+						"type": "text"
+					},
+					{
+						"key": "verification_time",
+						"value": "2019-12-30T13:10:00",
+						"type": "text"
+					},
+					{
+						"key": "mti",
+						"value": "0000",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "verification_user",
+						"value": "afsar",
+						"type": "text"
+					},
+					{
+						"key": "messageid",
+						"value": "{{messageid}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"idnumber\": \"784123456789012\",\n    \"cardnumber\": \"12345678\",\n    \"cardserialnumber\": \"\",\n    \"idtype\": \"\",\n    \"issuedate\": \"02/06/2010\",\n    \"expirydate\": \"02/06/2020\",\n    \"titlearabic\": \"\",\n    \"fullnamearabic\": \"افسر محمد\",\n    \"titleenglish\": \"\",\n    \"fullnameenglish\": \"Afsar Mohamed\",\n    \"gender\": \"M\",\n    \"nationalitycode\": \"IND\",\n    \"dateofbirth\": \"19830101\",\n    \"placeofbirthenglish\": \"Dubai\",\n    \"occupationcode\": \"\",\n    \"occupationarabic\": \"\",\n    \"occupationenglish\": \"Programmer\",\n    \"familyid\": \"\",\n    \"occupationtypearabic\": \"\",\n    \"occupationtypeenglish\": \"Computer\",\n    \"occupationfieldcode\": \"\",\n    \"companynamearabic\": \"\",\n    \"companynameenglish\": \"Al Fardan Exchange\",\n    \"maritalstatuscode\": \"M\",\n    \"husbandidnumber\": \"\",\n    \"sponsortypecode\": \"\",\n    \"sponsorunifiednumber\": \"\",\n    \"sponsorname\": \"\",\n    \"residencytypecode\": \"\",\n    \"residencynumber\": \"\",\n    \"residencyexpirydate\": \"\",\n    \"passportnumber\": \"A23456\",\n    \"passporttypecode\": \"\",\n    \"passportcountrycode\": \"IND\",\n    \"passportcountryarabic\": \"\",\n    \"passportcountryenglish\": \"\",\n    \"passportissuedate\": \"01/06/1985\",\n    \"passportexpirydate\": \"02/06/2010\",\n    \"qualificationlevelcode\": \"\",\n    \"qualificationlevelarabic\": \"\",\n    \"qualificationlevelenglish\": \"\",\n    \"degreedescriptionarabic\": \"\",\n    \"degreedescriptionenglish\": \"\",\n    \"fieldofstudycode\": \"\",\n    \"fieldofstudyarabic\": \"\",\n    \"fieldofstudyenglish\": \"\",\n    \"placeofstudyarabic\": \"\",\n    \"placeofstudyenglish\": \"\",\n    \"dateofgraduation\": \"\",\n    \"motherfullnamearabic\": \"\",\n    \"motherfullnameenglish\": \"\",\n    \"home_addresstypecode\": \"\",\n    \"home_locationcode\": \"\",\n    \"home_emiratescode\": \"\",\n    \"home_emiratesdescarabic\": \"\",\n    \"home_emiratesdescenglish\": \"\",\n    \"home_citycode\": \"\",\n    \"home_citydescarabic\": \"\",\n    \"home_citydescenglish\": \"\",\n    \"home_streetarabic\": \"\",\n    \"home_streetenglish\": \"\",\n    \"home_pobox\": \"\",\n    \"home_areacode\": \"\",\n    \"home_areadescarabic\": \"\",\n    \"home_areadescenglish\": \"\",\n    \"home_buildingnamearabic\": \"\",\n    \"home_buildingnameenglish\": \"\",\n    \"home_mobilephonenumber\": \"\",\n    \"home_email\": \"\",\n    \"home_flatno\": \"\",\n    \"home_residentphonenumber\": \"\",\n    \"work_addresstypecode\": \"\",\n    \"work_locationcode\": \"\",\n    \"work_emiratescode\": \"\",\n    \"work_emiratesdescarabic\": \"\",\n    \"work_emiratesdescenglish\": \"\",\n    \"work_citycode\": \"\",\n    \"work_citydescarabic\": \"\",\n    \"work_citydescenglish\": \"\",\n    \"work_streetarabic\": \"\",\n    \"work_streetenglish\": \"\",\n    \"work_pobox\": \"\",\n    \"work_areacode\": \"\",\n    \"work_areadescarabic\": \"\",\n    \"work_areadescenglish\": \"\",\n    \"work_buildingnamearabic\": \"\",\n    \"work_buildingnameenglish\": \"\",\n    \"work_mobilephonenumber\": \"\",\n    \"work_email\": \"\",\n    \"work_companynamearabic\": \"\",\n    \"work_companynameenglish\": \"\",\n    \"work_landphonenumber\": \"\",\n    \"cardholderphoto\": \"\",\n    \"holdersignatureimage\": \"\",\n    \"countryofbirth\": \"IND\",\n    \"annual_activity_count\": \"10\",\n    \"annual_activity_amount\": \"1000\",\n    \"id_front_image_uri\":\"https://xyc.com:8081/files/ordercompletefiles/600344204_photo.jpg\",\n    \"id_back_image_uri\":\"https://xyc.com:8081/files/ordercompletefiles/600344204_photo.jpg\",\n    \"selfie_image_uri\":\"https://xyc.com:8081/files/ordercompletefiles/600344204_photo.jpg\"\n}"
+				},
+				"url": {
+					"raw": "{{baseurl}}/register",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/ping",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

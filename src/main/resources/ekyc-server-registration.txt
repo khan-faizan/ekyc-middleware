@@ -1,0 +1,148 @@
+
+
+
+POST https://213.42.73.204:6043/Internal/afexremit/ekyc/api/registration
+Body encoded with secretkey in Base64
+
+Request Body
+{
+    "ekyc": {
+				"idnumber": "784123456789012",
+				"cardnumber": "12345678",
+				"cardserialnumber": "",
+				"idtype": "",
+				"issuedate": "02/06/2010",
+				"expirydate": "02/06/2020",
+				"titlearabic": "",
+				"fullnamearabic": "افسر محمد",
+				"titleenglish": "",
+				"fullnameenglish": "Afsar Mohamed",
+				"gender": "M",
+				"nationalitycode": "IND",
+				"dateofbirth": "19830101",
+				"placeofbirthenglish": "Dubai",
+				"occupationcode": "",
+				"occupationarabic": "",
+				"occupationenglish": "Programmer",
+				"familyid": "",
+				"occupationtypearabic": "",
+				"occupationtypeenglish": "Computer",
+				"occupationfieldcode": "",
+				"companynamearabic": "",
+				"companynameenglish": "Al Fardan Exchange",
+				"maritalstatuscode": "M",
+				"husbandidnumber": "",
+				"sponsortypecode": "",
+				"sponsorunifiednumber": "",
+				"sponsorname": "",
+				"residencytypecode": "",
+				"residencynumber": "",
+				"residencyexpirydate": "",
+				"passportnumber": "A23456",
+				"passporttypecode": "",
+				"passportcountrycode": "IND",
+				"passportcountryarabic": "",
+				"passportcountryenglish": "",
+				"passportissuedate": "01/06/1985",
+				"passportexpirydate": "02/06/2010",
+				"qualificationlevelcode": "",
+				"qualificationlevelarabic": "",
+				"qualificationlevelenglish": "",
+				"degreedescriptionarabic": "",
+				"degreedescriptionenglish": "",
+				"fieldofstudycode": "",
+				"fieldofstudyarabic": "",
+				"fieldofstudyenglish": "",
+				"placeofstudyarabic": "",
+				"placeofstudyenglish": "",
+				"dateofgraduation": "",
+				"motherfullnamearabic": "",
+				"motherfullnameenglish": "",
+				"home_addresstypecode": "",
+				"home_locationcode": "",
+				"home_emiratescode": "",
+				"home_emiratesdescarabic": "",
+				"home_emiratesdescenglish": "",
+				"home_citycode": "",
+				"home_citydescarabic": "",
+				"home_citydescenglish": "",
+				"home_streetarabic": "",
+				"home_streetenglish": "",
+				"home_pobox": "",
+				"home_areacode": "",
+				"home_areadescarabic": "",
+				"home_areadescenglish": "",
+				"home_buildingnamearabic": "",
+				"home_buildingnameenglish": "",
+				"home_mobilephonenumber": "",
+				"home_email": "",
+				"home_flatno": "",
+				"home_residentphonenumber": "",
+				"work_addresstypecode": "",
+				"work_locationcode": "",
+				"work_emiratescode": "",
+				"work_emiratesdescarabic": "",
+				"work_emiratesdescenglish": "",
+				"work_citycode": "",
+				"work_citydescarabic": "",
+				"work_citydescenglish": "",
+				"work_streetarabic": "",
+				"work_streetenglish": "",
+				"work_pobox": "",
+				"work_areacode": "",
+				"work_areadescarabic": "",
+				"work_areadescenglish": "",
+				"work_buildingnamearabic": "",
+				"work_buildingnameenglish": "",
+				"work_mobilephonenumber": "",
+				"work_email": "",
+				"work_companynamearabic": "",
+				"work_companynameenglish": "",
+				"work_landphonenumber": "",
+				"cardholderphoto": "",
+				"holdersignatureimage": "",
+				"countryofbirth": "IND",
+				"annual_activity_count": "10",
+				"annual_activity_amount": "1000",
+				"id_front_image_uri":"https://xyc.com:8081/files/ordercompletefiles/600344204_photo.jpg",
+				"id_back_image_uri":"https://xyc.com:8081/files/ordercompletefiles/600344204_photo.jpg",
+				"selfie_image_uri":"https://xyc.com:8081/files/ordercompletefiles/600344204_photo.jpg"
+			 },
+			 
+	"device":{
+				"uuid": "A6:89:F2:20:DA",
+				"iemi": "266234309374234",
+                "version": "8",
+                "model": "Edge",
+                "name":"Samsung"
+
+			 }		     
+}
+
+
+Response Body
+
+if not active
+{
+    "message": "Device has been registered but not active, Please go to Alfardan office to activate your device",
+    "status": "false",
+	"statuscode" : "001"
+}
+
+if active and registered successfully
+{
+    "message": "{\"responsecode\":\"0000\",\"responsedata\":\"Completed Successfully \"}",
+    "status": "true",
+	"statuscode" : "000"
+}
+
+custom error response
+{
+    "message": "Something went wrong at server side",
+    "status": "false",
+	"statuscode" : "002"
+}
+
+
+
+

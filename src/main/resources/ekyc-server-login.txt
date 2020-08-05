@@ -1,0 +1,45 @@
+
+
+POST https://213.42.73.204:6043/Internal/afexremit/ekyc/api/login
+Body encoded with secretkey in Base64
+
+Request Body
+{
+    "login": {
+                "username": "",
+                "password": ""
+             },
+             
+    "device":{
+                "uuid": "A5:89:F2:20:DA",
+                "iemi": "225234309374234",
+                "version": "8",
+                "model": "Edge",
+                "name":"Samsung"
+
+             }           
+}
+
+
+Response Body
+
+if not active
+{
+    "message": "Device has been registered but not active, Please go to Alfardan office to activate your device",
+    "status": "false",
+	"statuscode" : "001"
+}
+
+if active and logged in successfully
+{
+    "message": "{\"responsecode\":\"0000\",\"responsedata\":\"Completed Successfully \"}",
+    "status": "true",
+	"statuscode" : "000"
+}
+
+custom error response
+{
+    "message": "Something went wrong at server side",
+    "status": "false",
+	"statuscode" : "002"
+}
