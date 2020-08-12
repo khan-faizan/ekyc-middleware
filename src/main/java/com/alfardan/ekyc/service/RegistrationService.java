@@ -52,7 +52,7 @@ public class RegistrationService {
 
 	public Map<String, String> register(byte[] body,MultiValueMap<String, String> headers) throws JsonSyntaxException,
 			InvalidKeyException, IllegalBlockSizeException, BadPaddingException, IOException, IntrospectionException {
-		log.info("inside login service {}" + new Date());
+		log.info("inside register service {}" + new Date());
 		Gson gson = new Gson();
 		Map<String, Object> map = null;
 		String output = null;
@@ -74,47 +74,56 @@ public class RegistrationService {
 		}.getType());
 
 		Client client = Client.create();
-//		if (url != null) {
-//			url = url + "/register";
-//		} else {
-//			url = "https://172.31.1.221:9043/ords/afexremit/ekyc/v1/register";
+
+		
+		//MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
+//		for(Entry<String, Object> request : map.entrySet()) {
+//			if (request.getKey().toString().toLowerCase().equalsIgnoreCase("documentbinary")) {
+//				String documentbinary = gson.toJson(request.getValue());
+//				//System.out.println(Base64.getEncoder().encodeToString(oc.getValue().toString().getBytes()));
+//				System.out.println(documentbinary);
+//				Map<String, Object> documentbinaryMap = gson.fromJson(documentbinary, new TypeToken<Map<String, Object>>() {
+//				}.getType());
+//				
+//				for(Entry<String, Object> documentbinaryMaprequest : documentbinaryMap.entrySet()) {
+//					
+//				}
+//				break;
 //
+//			}
+//			
 //		}
 		
-		MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
-		for(Entry<String, Object> request : map.entrySet()) {
-			queryParams.add(request.getKey(), map.get(request.getKey()).toString());
-		}
+		//System.out.println("documentbinary -->"+ekycInfo);
 		//queryParams.add("username", map.get("username").toString());
 		//queryParams.add("password", map.get("password").toString());
 		
 		//System.out.println(queryParams.toString());
 		WebResource webResource = client.resource( url + "/register");
-		System.out.println(ekycInfo);
 		ClientResponse response = webResource
-				.queryParams(queryParams)
-				.header("verification_area", headers.get("verification_area"))
-				.header("verification_channel", headers.get("verification_channel"))
-				.header("verification_ref_no", headers.get("verification_ref_no"))
-				.header("verification_coordinates", headers.get("verification_coordinates"))
-				.header("verification_time", headers.get("verification_time"))
-				.header("mti", headers.get("mti"))
-				.header("verification_user", headers.get("verification_user"))
+				//.queryParams(queryParams)
+				.header("verification_area", headers.getFirst("verification_area"))
+				.header("verification_channel", headers.getFirst("verification_channel"))
+				.header("verification_ref_no", headers.getFirst("verification_ref_no"))
+				.header("verification_coordinates", headers.getFirst("verification_coordinates"))
+				.header("verification_time", headers.getFirst("verification_time"))
+				.header("mti", headers.getFirst("mti"))
+				.header("verification_user", headers.getFirst("verification_user"))
 				.header("Content-Type", "application/json")
 				.header("messageid", getMessageId())
 				.header("securekey", getSecureKey())
 				.header("acquirerid", acquirerid)
-				.post(ClientResponse.class);
+				.post(ClientResponse.class,ekycInfo);
 		
 		
 		
 		output = response.getEntity(String.class);
-		System.out.println(output);
+		//log.info("OUTPUT-->"+output);
 		gson = new Gson();
 		map = null;
 		map = gson.fromJson(output, new TypeToken<Map<String, Object>>() {
 		}.getType());
-		System.out.println(map.toString());
+		//System.out.println("map--->"+map.toString());
 		if(map != null) {
 			loginStatus = new HashMap<String, String>();
 			if(map.get("responsecode").toString().equalsIgnoreCase("0000")) {
@@ -125,10 +134,16 @@ public class RegistrationService {
 			}else {
 				loginStatus.put("status", "false");
 				loginStatus.put("statuscode", map.get("responsecode").toString());
-				loginStatus.put("message",  map.get("responsedata").toString());
+				if(map.get("reasons") !=null) {
+					loginStatus.put("message",  map.get("responsedata").toString()+", "+map.get("reasons"));
+				}else {
+					loginStatus.put("message",  map.get("responsedata").toString());
+				}
+				
 			}
 		}
 		}catch (Exception e) {
+			log.error(e.getMessage());
 			e.printStackTrace();
 		}
 		
@@ -142,7 +157,7 @@ public class RegistrationService {
 			secureKey = new String(
 					Base64.getEncoder().encode(MessageDigest.getInstance("SHA-256").digest(data.getBytes())));
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
+			log.error(e.getMessage());
 			e.printStackTrace();
 		}
 		return secureKey;

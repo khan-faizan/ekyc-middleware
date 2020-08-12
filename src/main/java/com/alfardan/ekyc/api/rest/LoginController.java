@@ -47,9 +47,10 @@ public class LoginController {
 	public ResponseEntity<Map<String, String>> validate(@RequestBody byte[] body,@RequestHeader MultiValueMap<String, String> headers) throws Exception {
 		log.debug("inside login request {}" + new Date());
 
-		Map<String, Object> map = checkDeviceStatusService.getdeviceStatus(body,headers);
+		
 		Map<String, String> deviceStatus = new HashMap<String, String>();
 		try {
+			Map<String, Object> map = checkDeviceStatusService.getdeviceStatus(body,headers);
 			if (map.get("status").toString().endsWith("N") || map.get("status").toString().endsWith("R")) {
 				deviceStatus.put("status", "false");
 				deviceStatus.put("statuscode", "001");
@@ -59,6 +60,7 @@ public class LoginController {
 				deviceStatus = loginService.login(body,headers);
 			}
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			deviceStatus.put("status", "false");
 			deviceStatus.put("statuscode", "002");
 			deviceStatus.put("message", "Something went wrong at server side");
@@ -67,41 +69,41 @@ public class LoginController {
 		return ResponseEntity.ok().body(deviceStatus);
 	}
 
-	@RequestMapping(value = "/encrypt", method = RequestMethod.POST, consumes = { "application/json", "application/xml",
-			"application/x-www-form-urlencoded" }, produces = { "application/json", "application/xml" })
-	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<byte[]> encrypt(@RequestBody String body,
-			@RequestHeader MultiValueMap<String, String> headers, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-
-		headers.forEach((key, value) -> {
-			System.out.println(String.format("Header '%s' = %s", key, value.stream().collect(Collectors.joining("|"))));
-		});
-		;
-		System.out.println("body:" + body);
-		EncodeWithSecretKey encodeWithSecretKey = new EncodeWithSecretKey();
-		byte[] encrypt = encodeWithSecretKey.encodeBeanToString(body);
-
-		return ResponseEntity.ok().body(encrypt);
-	}
-
-	@RequestMapping(value = "/decrypt", method = RequestMethod.POST, 
-			 consumes = {"application/json", "application/xml","application/x-www-form-urlencoded"},
-			 produces = {"application/json", "application/xml"})
-	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<String> decrypt(@RequestBody byte[] body,
-			@RequestHeader MultiValueMap<String, String> headers) throws Exception {
-		
-		headers.forEach((key, value) -> {
-			System.out.println(String.format("Header '%s' = %s", key, value.stream().collect(Collectors.joining("|"))));
-		});
-		
-		System.out.println("body:"+body);
-		EncodeWithSecretKey encodeWithSecretKey = new EncodeWithSecretKey();
-		
-		System.out.println(encodeWithSecretKey.decodeString(body));
-		
-		return ResponseEntity.ok().body(new String(body));
-	}
+//	@RequestMapping(value = "/encrypt", method = RequestMethod.POST, consumes = { "application/json", "application/xml",
+//			"application/x-www-form-urlencoded" }, produces = { "application/json", "application/xml" })
+//	@ResponseStatus(HttpStatus.CREATED)
+//	public ResponseEntity<byte[]> encrypt(@RequestBody String body,
+//			@RequestHeader MultiValueMap<String, String> headers, HttpServletRequest request,
+//			HttpServletResponse response) throws Exception {
+//
+//		headers.forEach((key, value) -> {
+//			System.out.println(String.format("Header '%s' = %s", key, value.stream().collect(Collectors.joining("|"))));
+//		});
+//		;
+//		System.out.println("body:" + body);
+//		EncodeWithSecretKey encodeWithSecretKey = new EncodeWithSecretKey();
+//		byte[] encrypt = encodeWithSecretKey.encodeBeanToString(body);
+//
+//		return ResponseEntity.ok().body(encrypt);
+//	}
+//
+//	@RequestMapping(value = "/decrypt", method = RequestMethod.POST, 
+//			 consumes = {"application/json", "application/xml","application/x-www-form-urlencoded"},
+//			 produces = {"application/json", "application/xml"})
+//	@ResponseStatus(HttpStatus.CREATED)
+//	public ResponseEntity<String> decrypt(@RequestBody byte[] body,
+//			@RequestHeader MultiValueMap<String, String> headers) throws Exception {
+//		
+//		headers.forEach((key, value) -> {
+//			System.out.println(String.format("Header '%s' = %s", key, value.stream().collect(Collectors.joining("|"))));
+//		});
+//		
+//		System.out.println("body:"+body);
+//		EncodeWithSecretKey encodeWithSecretKey = new EncodeWithSecretKey();
+//		
+//		//System.out.println(encodeWithSecretKey.decodeString(body));
+//		
+//		return ResponseEntity.ok().body(new String(encodeWithSecretKey.decodeString(body)));
+//	}
 
 }

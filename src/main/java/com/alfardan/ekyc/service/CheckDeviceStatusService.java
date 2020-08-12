@@ -67,6 +67,7 @@ public class CheckDeviceStatusService {
 		EncodeWithSecretKey encodeWithSecretKey = new EncodeWithSecretKey();
 		Gson gson = new Gson();
 		try {
+			//System.out.println(encodeWithSecretKey.decodeString(body));
 			map = gson.fromJson(encodeWithSecretKey.decodeString(body), new TypeToken<Map<String, Object>>() {
 			}.getType());
 			String deviceInfo = null;
@@ -108,7 +109,7 @@ public class CheckDeviceStatusService {
 
 			if (output != null) {
 
-				System.out.println(response.getStatus());
+				//System.out.println(response.getStatus());
 				map = null;
 				gson = new Gson();
 				System.out.println(response.getStatus());
@@ -117,7 +118,8 @@ public class CheckDeviceStatusService {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
+			throw e;
 		}
 		log.info("Device Status : " + map);
 		return map;

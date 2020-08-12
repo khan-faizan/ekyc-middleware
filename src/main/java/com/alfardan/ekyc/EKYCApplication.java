@@ -40,35 +40,35 @@ public class EKYCApplication {
         logApplicationStartup(env);
 	}
 	
-	@Bean
-	public EmbeddedServletContainerFactory servletContainer() {
-	  TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory() {
-	      @Override
-	      protected void postProcessContext(Context context) {
-	        SecurityConstraint securityConstraint = new SecurityConstraint();
-	        securityConstraint.setUserConstraint("CONFIDENTIAL");
-	        SecurityCollection collection = new SecurityCollection();
-	        collection.addPattern("/*");
-	        securityConstraint.addCollection(collection);
-	        context.addConstraint(securityConstraint);
-	      }
-	    };
-	  
-	  tomcat.addAdditionalTomcatConnectors(redirectConnector());
-	  return tomcat;
-	}
-
-	private Connector redirectConnector() {
-	  Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-	  connector.setScheme("http");
-	  connector.setPort(8080);
-	  connector.setSecure(true);
-	  
-	  String serverPort = env.getProperty("server.port");
-	  connector.setRedirectPort(Integer.parseInt(serverPort));
-	  
-	  return connector;
-	}
+//	@Bean
+//	public EmbeddedServletContainerFactory servletContainer() {
+//	  TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory() {
+//	      @Override
+//	      protected void postProcessContext(Context context) {
+//	        SecurityConstraint securityConstraint = new SecurityConstraint();
+//	        securityConstraint.setUserConstraint("CONFIDENTIAL");
+//	        SecurityCollection collection = new SecurityCollection();
+//	        collection.addPattern("/*");
+//	        securityConstraint.addCollection(collection);
+//	        context.addConstraint(securityConstraint);
+//	      }
+//	    };
+//	  
+//	  tomcat.addAdditionalTomcatConnectors(redirectConnector());
+//	  return tomcat;
+//	}
+//
+//	private Connector redirectConnector() {
+//	  Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+//	  connector.setScheme("http");
+//	  connector.setPort(8080);
+//	  connector.setSecure(false);
+//	  
+//	  String serverPort = env.getProperty("server.port");
+//	  connector.setRedirectPort(Integer.parseInt(serverPort));
+//	  
+//	  return connector;
+//	}
 	
 	
 	
@@ -106,13 +106,4 @@ public class EKYCApplication {
             env.getActiveProfiles());
     }
 }
-//@RestController
-//class SecuredServerController{
-//	
-//	@RequestMapping("/secured")
-//	public String secured(){
-//		System.out.println("Inside secured()");
-//		return "Hello user !!! : " + new Date();
-//	}
-//}
 

@@ -122,6 +122,7 @@ public class LoginService {
 			}
 		}
 		}catch (Exception e) {
+			log.error(e.getMessage());
 			e.printStackTrace();
 		}
 		
