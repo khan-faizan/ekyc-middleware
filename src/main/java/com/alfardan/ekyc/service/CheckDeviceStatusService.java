@@ -2,9 +2,12 @@ package com.alfardan.ekyc.service;
 
 import java.beans.IntrospectionException;
 import java.io.IOException;
+import java.net.Socket;
 import java.security.InvalidKeyException;
+import java.security.KeyManagementException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,6 +17,11 @@ import java.util.stream.Collectors;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509ExtendedTrustManager;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.slf4j.Logger;
@@ -40,7 +48,7 @@ public class CheckDeviceStatusService {
 
 	private static final Logger log = LoggerFactory.getLogger(CheckDeviceStatusService.class);
 
-	@Value("${afex.url}")
+	@Value("${afex.url.devicestatus}")
 	private String url;
 	
 	@Value("${afex.sharedKey}")
@@ -65,9 +73,9 @@ public class CheckDeviceStatusService {
 		log.debug("inside getdeviceStatus service {}" + new Date());
 		Map<String, Object> map = null;
 		EncodeWithSecretKey encodeWithSecretKey = new EncodeWithSecretKey();
+		//log.info("inside login service {}" + encodeWithSecretKey.decodeString(body));
 		Gson gson = new Gson();
 		try {
-			//System.out.println(encodeWithSecretKey.decodeString(body));
 			map = gson.fromJson(encodeWithSecretKey.decodeString(body), new TypeToken<Map<String, Object>>() {
 			}.getType());
 			String deviceInfo = null;
@@ -82,43 +90,41 @@ public class CheckDeviceStatusService {
 			map = null;
 			map = gson.fromJson(deviceInfo, new TypeToken<Map<String, Object>>() {
 			}.getType());
-
+			disableSSLVerification ();
 			Client client = Client.create();
-			//url = url + "/tabletstatus";
 			MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
-
 			queryParams.add("uuid", map.get("uuid").toString());
 			queryParams.add("iemi", map.get("iemi").toString());
 			queryParams.add("version", map.get("version").toString());
 			queryParams.add("model", map.get("model").toString());
 			queryParams.add("name", map.get("name").toString());
-			log.info(url + "-----------" + queryParams.toString());
-			
-			WebResource webResource = client.resource(url + "/tabletstatus");
+			queryParams.add("acquirer_id", acquirerid);
+			log.info("Check device status url : "+url);
+			log.info("queryParams-->"+queryParams);
+			WebResource webResource = client.resource(url);
 			ClientResponse response = webResource.queryParams(queryParams)
 					.header("messageid", getMessageId())
 					.header("securekey", getSecureKey())
 					.header("acquirerid", acquirerid)
 					.post(ClientResponse.class);
-//			System.out.println(headers.getFirst("acquirerid"));
-//			headers.forEach((key, value) -> {
-//				System.out.println(
-//						String.format("Header '%s' = %s", key, value.stream().collect(Collectors.joining("|"))));
-//			});
-			String output = response.getEntity(String.class);
+			
+			if (response.getStatus() != 200) {
+				log.info("Failed : HTTP error code : " + response.getStatus() + "--" + response.getHeaders());
+				
+			}else {
+				String output = response.getEntity(String.class);
+				if (output != null) {
+					map = null;
+					gson = new Gson();
+					System.out.println(response.getStatus());
+					map = gson.fromJson(output, new TypeToken<Map<String, Object>>() {
+					}.getType());
 
-			if (output != null) {
-
-				//System.out.println(response.getStatus());
-				map = null;
-				gson = new Gson();
-				System.out.println(response.getStatus());
-				map = gson.fromJson(output, new TypeToken<Map<String, Object>>() {
-				}.getType());
-
+				}
 			}
+			
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error("Error : "+e.getMessage());
 			throw e;
 		}
 		log.info("Device Status : " + map);
@@ -147,7 +153,53 @@ public class CheckDeviceStatusService {
 		 
 		return messageId;
 	}
+	public static void disableSSLVerification () {
 
+	      TrustManager [] trustAllCerts = new TrustManager [] {new X509ExtendedTrustManager () {
+	         @Override
+	         public void checkClientTrusted (X509Certificate [] chain, String authType, Socket socket) {
+
+	         }
+
+	         @Override
+	         public void checkServerTrusted (X509Certificate [] chain, String authType, Socket socket) {
+
+	         }
+
+	         @Override
+	         public void checkClientTrusted (X509Certificate [] chain, String authType, SSLEngine engine) {
+
+	         }
+
+	         @Override
+	         public void checkServerTrusted (X509Certificate [] chain, String authType, SSLEngine engine) {
+
+	         }
+
+	         @Override
+	         public java.security.cert.X509Certificate [] getAcceptedIssuers () {
+	            return null;
+	         }
+
+	         @Override
+	         public void checkClientTrusted (X509Certificate [] certs, String authType) {
+	         }
+
+	         @Override
+	         public void checkServerTrusted (X509Certificate [] certs, String authType) {
+	         }
+
+	      }};
+
+	      SSLContext sc = null;
+	      try {
+	         sc = SSLContext.getInstance ("SSL");
+	         sc.init (null, trustAllCerts, new java.security.SecureRandom ());
+	      } catch (KeyManagementException | NoSuchAlgorithmException e) {
+	         e.printStackTrace ();
+	      }
+	      HttpsURLConnection.setDefaultSSLSocketFactory (sc.getSocketFactory ());
+	   }
 	public static void main(String[] args) throws Exception {
 		String data = "{\r\n" + "    \"login\": {\r\n" + "				\"username\": \"SWAPNIL\",\r\n"
 				+ "				\"password\": \"Swap23$38200\"\r\n" + "			 },\r\n" + "			 \r\n"

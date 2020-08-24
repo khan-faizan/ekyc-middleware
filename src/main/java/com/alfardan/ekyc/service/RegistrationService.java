@@ -2,9 +2,12 @@ package com.alfardan.ekyc.service;
 
 import java.beans.IntrospectionException;
 import java.io.IOException;
+import java.net.Socket;
 import java.security.InvalidKeyException;
+import java.security.KeyManagementException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,11 +17,17 @@ import java.util.Map.Entry;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509ExtendedTrustManager;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 
@@ -34,7 +43,7 @@ import com.sun.jersey.core.util.MultivaluedMapImpl;
 @Component
 public class RegistrationService {
 	private static final Logger log = LoggerFactory.getLogger(RegistrationService.class);
-	@Value("${afex.url}")
+	@Value("${afex.url.register}")
 	private String url;
 	
 	@Value("${afex.sharedKey}")
@@ -56,7 +65,7 @@ public class RegistrationService {
 		Gson gson = new Gson();
 		Map<String, Object> map = null;
 		String output = null;
-		Map<String, String> loginStatus = null;
+		Map<String, String> registerationStatus = null;
 		try {
 		EncodeWithSecretKey encodeWithSecretKey = new EncodeWithSecretKey();
 		map = gson.fromJson(encodeWithSecretKey.decodeString(body),
@@ -70,38 +79,37 @@ public class RegistrationService {
 
 			}
 		}
+		
 		map = gson.fromJson(ekycInfo, new TypeToken<Map<String, Object>>() {
 		}.getType());
+		MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
+		String documentbinary ="";
+		for(Entry<String, Object> o : map.entrySet()) {
+			
+			if (o.getKey().toString().toLowerCase().equalsIgnoreCase("documentbinary")) {
+				documentbinary = gson.toJson(o.getValue());
 
+			}
+			else {
+				if(o.getKey().toString().toLowerCase().equalsIgnoreCase("fullnamearabic")) {
+					queryParams.add(o.getKey().toString(),  headers.getFirst("arabicname"));
+				}else {
+					queryParams.add(o.getKey().toString(), o.getValue().toString());
+				}
+			}
+		}
+		
+		//log.info("queryParams-->"+queryParams);
+		//log.info("documentbinary-->"+documentbinary);
+		disableSSLVerification ();
 		Client client = Client.create();
 
+		log.info("Registration url : "+url);
 		
-		//MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
-//		for(Entry<String, Object> request : map.entrySet()) {
-//			if (request.getKey().toString().toLowerCase().equalsIgnoreCase("documentbinary")) {
-//				String documentbinary = gson.toJson(request.getValue());
-//				//System.out.println(Base64.getEncoder().encodeToString(oc.getValue().toString().getBytes()));
-//				System.out.println(documentbinary);
-//				Map<String, Object> documentbinaryMap = gson.fromJson(documentbinary, new TypeToken<Map<String, Object>>() {
-//				}.getType());
-//				
-//				for(Entry<String, Object> documentbinaryMaprequest : documentbinaryMap.entrySet()) {
-//					
-//				}
-//				break;
-//
-//			}
-//			
-//		}
-		
-		//System.out.println("documentbinary -->"+ekycInfo);
-		//queryParams.add("username", map.get("username").toString());
-		//queryParams.add("password", map.get("password").toString());
-		
-		//System.out.println(queryParams.toString());
-		WebResource webResource = client.resource( url + "/register");
+		WebResource webResource = client.resource( url);
 		ClientResponse response = webResource
-				//.queryParams(queryParams)
+				.queryParams(queryParams)
+				//.type(MediaType.APPLICATION_JSON_UTF8_VALUE)
 				.header("verification_area", headers.getFirst("verification_area"))
 				.header("verification_channel", headers.getFirst("verification_channel"))
 				.header("verification_ref_no", headers.getFirst("verification_ref_no"))
@@ -112,32 +120,33 @@ public class RegistrationService {
 				.header("Content-Type", "application/json")
 				.header("messageid", getMessageId())
 				.header("securekey", getSecureKey())
-				.header("acquirerid", acquirerid)
-				.post(ClientResponse.class,ekycInfo);
+				//.header("acquirerid", acquirerid)
+				.header("acquirerid", headers.getFirst("acquirerid"))
+				.post(ClientResponse.class,documentbinary);
 		
-		
+
 		
 		output = response.getEntity(String.class);
-		//log.info("OUTPUT-->"+output);
+		
+		log.info("output-->"+output);
 		gson = new Gson();
 		map = null;
 		map = gson.fromJson(output, new TypeToken<Map<String, Object>>() {
 		}.getType());
-		//System.out.println("map--->"+map.toString());
 		if(map != null) {
-			loginStatus = new HashMap<String, String>();
+			registerationStatus = new HashMap<String, String>();
 			if(map.get("responsecode").toString().equalsIgnoreCase("0000")) {
-				loginStatus.put("status", "true");
-				loginStatus.put("statuscode", "000");
-				loginStatus.put("message",  map.get("responsedata").toString());
+				registerationStatus.put("status", "true");
+				registerationStatus.put("statuscode", "000");
+				registerationStatus.put("message",  map.get("responsedata").toString());
 				
 			}else {
-				loginStatus.put("status", "false");
-				loginStatus.put("statuscode", map.get("responsecode").toString());
+				registerationStatus.put("status", "false");
+				registerationStatus.put("statuscode", map.get("responsecode").toString());
 				if(map.get("reasons") !=null) {
-					loginStatus.put("message",  map.get("responsedata").toString()+", "+map.get("reasons"));
+					registerationStatus.put("message",  map.get("responsedata").toString()+", "+map.get("reasons"));
 				}else {
-					loginStatus.put("message",  map.get("responsedata").toString());
+					registerationStatus.put("message",  map.get("responsedata").toString());
 				}
 				
 			}
@@ -147,7 +156,7 @@ public class RegistrationService {
 			e.printStackTrace();
 		}
 		
-		return loginStatus;
+		return registerationStatus;
 	}
 
 	public String getSecureKey() {
@@ -172,5 +181,54 @@ public class RegistrationService {
 		 
 		return messageId;
 	}
+	
+	
+	public static void disableSSLVerification () {
+
+	      TrustManager [] trustAllCerts = new TrustManager [] {new X509ExtendedTrustManager () {
+	         @Override
+	         public void checkClientTrusted (X509Certificate [] chain, String authType, Socket socket) {
+
+	         }
+
+	         @Override
+	         public void checkServerTrusted (X509Certificate [] chain, String authType, Socket socket) {
+
+	         }
+
+	         @Override
+	         public void checkClientTrusted (X509Certificate [] chain, String authType, SSLEngine engine) {
+
+	         }
+
+	         @Override
+	         public void checkServerTrusted (X509Certificate [] chain, String authType, SSLEngine engine) {
+
+	         }
+
+	         @Override
+	         public java.security.cert.X509Certificate [] getAcceptedIssuers () {
+	            return null;
+	         }
+
+	         @Override
+	         public void checkClientTrusted (X509Certificate [] certs, String authType) {
+	         }
+
+	         @Override
+	         public void checkServerTrusted (X509Certificate [] certs, String authType) {
+	         }
+
+	      }};
+
+	      SSLContext sc = null;
+	      try {
+	         sc = SSLContext.getInstance ("SSL");
+	         sc.init (null, trustAllCerts, new java.security.SecureRandom ());
+	      } catch (KeyManagementException | NoSuchAlgorithmException e) {
+	         e.printStackTrace ();
+	      }
+	      HttpsURLConnection.setDefaultSSLSocketFactory (sc.getSocketFactory ());
+	   }
 
 }

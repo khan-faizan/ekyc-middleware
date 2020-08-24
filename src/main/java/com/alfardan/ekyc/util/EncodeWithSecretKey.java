@@ -47,25 +47,19 @@ public class EncodeWithSecretKey {
 		byte[] decodedBytes = Base64.decode(param);
 		cipher.init(Cipher.DECRYPT_MODE, myDesKey);
 		byte[] textDecrypted = cipher.doFinal(decodedBytes);
-
 		return new String(textDecrypted);
 	}
 
 	private void test() {
-//		String data = "{\r\n" + 
-//				"    \"login\": [{\r\n" + 
-//				"				\"username\": \"SWAPNIL\",\r\n" + 
-//				"				\"password\": \"Swap23$38200\"\r\n" + 
-//				"			 }],\r\n" + 
-//				"			 \r\n" + 
-//				"	\"device\":[{\r\n" + 
-//				"				\"uuid\": \"AB:89:FA:80:DA\",\r\n" + 
-//				"				\"iemi\": \"234234324234234\"\r\n" + 
-//				"			 }] 		 \r\n" + 
-//				"    \r\n" + 
-//				"}";
+		String data = "{\"device\":{\"model\":\"Xiaomi MI PAD\",\"uuid\":\"375b40d9563ce6bc\",\"iemi\":\"210C2081\",\"name\":\"Xiaomi\",\"version\":\"19\"},\"ekyc\":{\"passportissuedate\":\"01\\/06\\/1985\",\"idtype\":\"EID\",\"placeofbirthenglish\":\"\",\"dateofbirth\":\"01\\/01\\/1983\",\"expirydate\":\"02\\/06\\/2020\",\"maritalstatuscode\":\"U\",\"customertype\":\"Individual\",\"residencystatus\":\"Resident\",\"occupationenglish\":\"Programmer\",\"annual_activity_amount\":\"\",\"placeofissue\":\"EIDA\",\"mobilenumber\":\"\",\"countryofbirth\":\"IND\",\"companynameenglish\":\"Al Fardan Exchnage\",\"gender\":\"F\",\"annual_activity_count\":\"\",\"passportexpirydate\":\"02\\/06\\/2010\",\"fullnameenglish\":\"Afsar\",\"cardnumber\":\"12345678\",\"idnumber\":\"784123456789012\",\"documentbinary\":{\"EIDImageFront\":\"\",\"EIDImageBack\":\"\"},\"country\":\"UAE\",\"passportnumber\":\"A23456\",\"occupationtypeenglish\":\"Computer\",\"email\":\"\",\"issuedate\":\"02\\/06\\/2010\",\"fullnamearabic\":\"افسر محمد\"}}";
 
-		String data = "{\"device\":{\"uuid\":\"10d8ecbfbd59606b\",\"iemi\":\"\",\"version\":\"28\",\"model\":\"OnePlus ONEPLUS A3003\",\"name\":\"OnePlus\"},\"ekyc\":{\"idnumber\":\"784123456789012\",\"cardnumber\":\"12345678\",\"issuedate\":\"02\\/06\\/2010\",\"expirydate\":\"02\\/06\\/2020\",\"fullnamearabic\":\"افسر محمد\",\"fullnameenglish\":\"Afsar\",\"gender\":\"M\",\"nationalitycode\":\"IND\",\"dateofbirth\":\"19830101\",\"placeofbirthenglish\":\"POB\",\"occupationenglish\":\"Programmer\",\"occupationtypeenglish\":\"Computer\",\"companynameenglish\":\"Al Fardan Exchnage\",\"maritalstatuscode\":\"M\",\"passportnumber\":\"A23456\",\"passportcountrycode\":\"IND\",\"passportissuedate\":\"01\\/06\\/1985\",\"passportexpirydate\":\"02\\/06\\/2010\",\"countryofbirth\":\"IND\",\"annual_activity_count\":\"11\",\"annual_activity_amount\":\"1000\"}}";
+		// String data =
+		// "{\"device\":{\"uuid\":\"10d8ecbfbd59606b\",\"iemi\":\"\",\"version\":\"28\",\"model\":\"OnePlus
+		// ONEPLUS
+		// A3003\",\"name\":\"OnePlus\"},\"ekyc\":{\"idnumber\":\"784123456789012\",\"cardnumber\":\"12345678\",\"issuedate\":\"02\\/06\\/2010\",\"expirydate\":\"02\\/06\\/2020\",\"fullnamearabic\":\"افسر
+		// محمد\",\"fullnameenglish\":\"Afsar\",\"gender\":\"M\",\"nationalitycode\":\"IND\",\"dateofbirth\":\"19830101\",\"placeofbirthenglish\":\"POB\",\"occupationenglish\":\"Programmer\",\"occupationtypeenglish\":\"Computer\",\"companynameenglish\":\"Al
+		// Fardan
+		// Exchnage\",\"maritalstatuscode\":\"M\",\"passportnumber\":\"A23456\",\"passportcountrycode\":\"IND\",\"passportissuedate\":\"01\\/06\\/1985\",\"passportexpirydate\":\"02\\/06\\/2010\",\"countryofbirth\":\"IND\",\"annual_activity_count\":\"11\",\"annual_activity_amount\":\"1000\"}}";
 
 		try {
 			byte[] encoded = encodeBeanToString(data);

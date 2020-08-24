@@ -2,6 +2,7 @@ package com.alfardan.ekyc.api.rest;
 
 import java.beans.IntrospectionException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -64,13 +65,12 @@ public class RegistrationController {
 	
 	@RequestMapping(value = "/registration", method = RequestMethod.POST, consumes = { "application/json",
 			"application/xml",
-			"application/x-www-form-urlencoded" }, produces = { "application/json", "application/xml" })
+			"application/x-www-form-urlencoded", "text/html" }, produces = { "application/json", "application/xml" })
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Map<String, String>> validate(@RequestBody byte[] body,
 			@RequestHeader MultiValueMap<String, String> headers) throws Exception {
 		log.debug("inside login request {}" + new Date());
 
-		
 		Map<String, String> deviceStatus = new HashMap<String, String>();
 		
 		
@@ -82,15 +82,17 @@ public class RegistrationController {
 				String message = "Device has been registered but not active, Please go to Alfardan office to activate your device";
 				deviceStatus.put("message", message);
 			} else {
+				headers.add ("acquirerid", map.get("acquirerid").toString());
 				deviceStatus = registrationService.register(body, headers);
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			deviceStatus.put("status", "false");
 			deviceStatus.put("statuscode", "002");
-			deviceStatus.put("message", "Something went wrong at server side");
-			return ResponseEntity.ok().body(deviceStatus);
+			deviceStatus.put("message", e.getMessage());
+			return ResponseEntity.badRequest().body(deviceStatus);
 		}
+		log.info("Registration API response-->"+deviceStatus.toString());
 		return ResponseEntity.ok().body(deviceStatus);
 	}
 	

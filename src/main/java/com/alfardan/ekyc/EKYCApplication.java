@@ -17,6 +17,8 @@ import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletCon
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
+
 
 @SpringBootApplication(scanBasePackages= {"com.alfardan.ekyc.*"})
 @ComponentScan(basePackages = "com.alfardan.ekyc.*")
@@ -40,35 +42,46 @@ public class EKYCApplication {
         logApplicationStartup(env);
 	}
 	
-//	@Bean
-//	public EmbeddedServletContainerFactory servletContainer() {
-//	  TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory() {
-//	      @Override
-//	      protected void postProcessContext(Context context) {
-//	        SecurityConstraint securityConstraint = new SecurityConstraint();
-//	        securityConstraint.setUserConstraint("CONFIDENTIAL");
-//	        SecurityCollection collection = new SecurityCollection();
-//	        collection.addPattern("/*");
-//	        securityConstraint.addCollection(collection);
-//	        context.addConstraint(securityConstraint);
-//	      }
-//	    };
-//	  
-//	  tomcat.addAdditionalTomcatConnectors(redirectConnector());
-//	  return tomcat;
-//	}
-//
-//	private Connector redirectConnector() {
-//	  Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-//	  connector.setScheme("http");
-//	  connector.setPort(8080);
-//	  connector.setSecure(false);
-//	  
-//	  String serverPort = env.getProperty("server.port");
-//	  connector.setRedirectPort(Integer.parseInt(serverPort));
-//	  
-//	  return connector;
-//	}
+	@Bean
+	public CommonsRequestLoggingFilter requestLoggingFilter() {
+	    CommonsRequestLoggingFilter loggingFilter = new CommonsRequestLoggingFilter();
+	    loggingFilter.setIncludeClientInfo(true);
+	    loggingFilter.setIncludeQueryString(true);
+	    loggingFilter.setIncludePayload(true);
+	    loggingFilter.setIncludeQueryString(true);
+	    loggingFilter.setMaxPayloadLength(6400000);
+	    return loggingFilter;
+	}
+	
+	@Bean
+	public EmbeddedServletContainerFactory servletContainer() {
+	  TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory() {
+	      @Override
+	      protected void postProcessContext(Context context) {
+	        SecurityConstraint securityConstraint = new SecurityConstraint();
+	        securityConstraint.setUserConstraint("CONFIDENTIAL");
+	        SecurityCollection collection = new SecurityCollection();
+	        collection.addPattern("/*");
+	        securityConstraint.addCollection(collection);
+	        context.addConstraint(securityConstraint);
+	      }
+	    };
+	  
+	  tomcat.addAdditionalTomcatConnectors(redirectConnector());
+	  return tomcat;
+	}
+
+	private Connector redirectConnector() {
+	  Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+	  connector.setScheme("http");
+	  connector.setPort(8080);
+	  connector.setSecure(true);
+	  
+	  String serverPort = env.getProperty("server.port");
+	  connector.setRedirectPort(Integer.parseInt(serverPort));
+	  
+	  return connector;
+	}
 	
 	
 	

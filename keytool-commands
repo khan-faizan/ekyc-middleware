@@ -1,8 +1,39 @@
-keytool -genkey -alias selfsigned_localhost_sslserver -keyalg RSA -keysize 2048 -validity 700 -keypass changeit -storepass changeit -keystore ssl-server.jks
-
-keytool -list -keystore ssl-server.jks
-
-keytool -list -rfc -keystore ssl-server.jks
+OpenSSL> pkcs12 -export -in F:\\alfardan\\ekyc\\certificates\\new\\afex_api_uat.crt 
+-inkey privateKey.key 
+-certfile afex_api_uat.crt -out F:\\alfardan\\ekyc\\certificates\\new\\afex_api_uat.p12
 
 
-$ keytool -genkey -alias afexcert -keyalg RSA -keysize 2048 -validity 700 -keypass passkeyafex -storepass passkeyafex -keystore afex-ssl.jks
+OpenSSL> pkcs12 -export -in F:\\selfsigned-cert\\server.crt -inkey F:\\selfsigned-cert\\server.key -certfile F:\\selfsigned-cert\\server.crt -out F:\\selfsigned-cert\\server.p12
+
+
+C:\OpenSSL\bin>openssl req -new -key F:\selfsigned-cert\privateKey.key -out F:\selfsigned-cert\afex_uat.csr
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:AE
+State or Province Name (full name) [Some-State]:Dubai
+Locality Name (eg, city) []:Dubai
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:AFEX
+Organizational Unit Name (eg, section) []:alfardan
+Common Name (e.g. server FQDN or YOUR name) []:213.42.73.204
+Email Address []:alfardanexchange.com
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:afex@2020
+An optional company name []:afex
+
+C:\OpenSSL\bin>openssl x509 -req -days 365 -in F:\selfsigned-cert\afex_uat.csr -signkey F:\selfsigned-cert\privateKey.key -out F:\selfsigned-cert\afex_uat.crt
+Signature ok
+subject=/C=AE/ST=Dubai/L=Dubai/O=AFEX/OU=alfardan/CN=213.42.73.204/emailAddress=alfardanexchange.com
+Getting Private key
+unable to write 'random state'
+
+C:\OpenSSL\bin>openssl pkcs12 -export -in F:\\selfsigned-cert\\afex_uat.crt -inkey F:\\selfsigned-cert\\privateKey.key -certfile F:\\selfsigned-cert\\afex_uat.crt -out F:\\selfsigned-cert\\afex_uat.p12
+Enter Export Password:
+Verifying - Enter Export Password:
+unable to write 'random state'
