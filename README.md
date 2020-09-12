@@ -1,5 +1,4 @@
 ![Image of framework](https://github.com/khan-faizan/ekyc-middleware/blob/master/digital-ekyc-bnr.png)
-![Image of framework](https://github.com/khan-faizan/ekyc-middleware/blob/master/spring-boot.png)
 
 # ekyc-middleware
 
