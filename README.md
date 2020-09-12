@@ -1,3 +1,5 @@
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+
 # ekyc-middleware
 
 * This middleware is used for in/out bound calls for any source(web/mobile/db).
