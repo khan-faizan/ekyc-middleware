@@ -1,4 +1,4 @@
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+![Image of framework](https://github.com/khan-faizan/ekyc-middleware/blob/master/spring-boot.png)
 
 # ekyc-middleware
 
