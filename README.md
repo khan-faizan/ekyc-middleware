@@ -17,3 +17,13 @@
 3. Maven
 4. Html, css or any JS framework for front end
 5. Log4j for logging
+
+### Future Plan
+
+1. Integrate with mongodb.
+2. Integrate Jhipster to manage and create apis.
+3. Highly configurable as api gateway
+4. Automation
+5. Automated test cases
+6. Elastic search
+7. Multiple Langauge Support
