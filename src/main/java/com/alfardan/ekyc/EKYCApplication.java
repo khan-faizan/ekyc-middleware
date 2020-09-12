@@ -42,16 +42,16 @@ public class EKYCApplication {
         logApplicationStartup(env);
 	}
 	
-	@Bean
-	public CommonsRequestLoggingFilter requestLoggingFilter() {
-	    CommonsRequestLoggingFilter loggingFilter = new CommonsRequestLoggingFilter();
-	    loggingFilter.setIncludeClientInfo(true);
-	    loggingFilter.setIncludeQueryString(true);
-	    loggingFilter.setIncludePayload(true);
-	    loggingFilter.setIncludeQueryString(true);
-	    loggingFilter.setMaxPayloadLength(6400000);
-	    return loggingFilter;
-	}
+//	@Bean
+//	public CommonsRequestLoggingFilter requestLoggingFilter() {
+//	    CommonsRequestLoggingFilter loggingFilter = new CommonsRequestLoggingFilter();
+//	    loggingFilter.setIncludeClientInfo(true);
+//	    loggingFilter.setIncludeQueryString(true);
+//	    loggingFilter.setIncludePayload(true);
+//	    loggingFilter.setIncludeQueryString(true);
+//	    loggingFilter.setMaxPayloadLength(6400000);
+//	    return loggingFilter;
+//	}
 	
 	@Bean
 	public EmbeddedServletContainerFactory servletContainer() {

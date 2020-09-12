@@ -1,0 +1,86 @@
+2020-08-20 16:13:49,253 INFO  [main] EKYCApplication: Starting EKYCApplication v1.0 on WU-AGENT with PID 182452 (C:\middleware\bin\middleware-1.0.jar started by admin in C:\middleware\bin)
+2020-08-20 16:13:49,277 INFO  [main] EKYCApplication: No active profile set, falling back to default profiles: default
+2020-08-20 16:13:51,128 DEBUG [background-preinit] logging: Logging Provider: org.jboss.logging.Slf4jLoggerProvider found via system property
+2020-08-20 16:14:00,635 INFO  [main] EKYCApplication: Started EKYCApplication in 14.196 seconds (JVM running for 17.431)
+2020-08-20 16:14:00,639 INFO  [main] EKYCApplication: 
+----------------------------------------------------------
+	Application 'EKYC-APP' is running! Access URLs:
+	Local: 		https://localhost:6043/
+	External: 	https://172.31.1.221:6043/
+	Profile(s): 	[]
+----------------------------------------------------------
+2020-08-20 16:15:25,727 INFO  [https-jsse-nio-6043-exec-4] EKYCApplication: inside login request {}Thu Aug 20 16:15:25 GST 2020
+2020-08-20 16:15:26,398 INFO  [https-jsse-nio-6043-exec-4] CheckDeviceStatusService: Check device status url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/tabletstatus
+2020-08-20 16:15:26,399 INFO  [https-jsse-nio-6043-exec-4] CheckDeviceStatusService: queryParams-->{acquirer_id=[UAEPASS], name=[Test], iemi=[56322309374234], model=[Edge], uuid=[34755590654544], version=[28]}
+2020-08-20 16:15:26,773 INFO  [https-jsse-nio-6043-exec-4] CheckDeviceStatusService: Device Status : {status=R, responsecode=0000, responsedata=Completed Successfully }
+2020-08-20 16:16:39,124 INFO  [https-jsse-nio-6043-exec-9] CheckDeviceStatusService: Check device status url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/tabletstatus
+2020-08-20 16:16:39,127 INFO  [https-jsse-nio-6043-exec-9] CheckDeviceStatusService: queryParams-->{acquirer_id=[UAEPASS], name=[Samsung], iemi=[266234309374234], model=[Edge], uuid=[A6:89:F2:20:DA], version=[8]}
+2020-08-20 16:16:39,352 INFO  [https-jsse-nio-6043-exec-9] CheckDeviceStatusService: Device Status : {status=Y, acquirerid=UAEPASS, responsecode=0000, responsedata=Completed Successfully }
+2020-08-20 16:16:39,354 INFO  [https-jsse-nio-6043-exec-9] RegistrationService: inside register service {}Thu Aug 20 16:16:39 GST 2020
+2020-08-20 16:16:39,508 INFO  [https-jsse-nio-6043-exec-9] RegistrationService: Registration url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/register
+2020-08-20 16:16:40,572 INFO  [https-jsse-nio-6043-exec-9] RegistrationService: output-->{"responsecode":"0030","responsedata":"Unexpected Error Raised - 1742970"}
+2020-08-20 16:16:40,583 INFO  [https-jsse-nio-6043-exec-9] EKYCApplication: Registration API response-->{statuscode=0030, message=Unexpected Error Raised - 1742970, status=false}
+2020-08-20 16:49:32,934 INFO  [https-jsse-nio-6043-exec-4] CheckDeviceStatusService: Check device status url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/tabletstatus
+2020-08-20 16:49:32,935 INFO  [https-jsse-nio-6043-exec-4] CheckDeviceStatusService: queryParams-->{acquirer_id=[UAEPASS], name=[Samsung], iemi=[266234309374234], model=[Edge], uuid=[A6:89:F2:20:DA], version=[8]}
+2020-08-20 16:49:33,159 INFO  [https-jsse-nio-6043-exec-4] CheckDeviceStatusService: Device Status : {status=Y, acquirerid=UAEPASS, responsecode=0000, responsedata=Completed Successfully }
+2020-08-20 16:49:33,160 INFO  [https-jsse-nio-6043-exec-4] RegistrationService: inside register service {}Thu Aug 20 16:49:33 GST 2020
+2020-08-20 16:49:33,265 INFO  [https-jsse-nio-6043-exec-4] RegistrationService: Registration url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/register
+2020-08-20 16:49:34,380 INFO  [https-jsse-nio-6043-exec-4] RegistrationService: output-->{"responsecode":"0065","responsedata":"Duplicate Registration"}
+2020-08-20 16:49:34,386 INFO  [https-jsse-nio-6043-exec-4] EKYCApplication: Registration API response-->{statuscode=0065, message=Duplicate Registration, status=false}
+2020-08-20 17:37:44,549 INFO  [https-jsse-nio-6043-exec-3] EKYCApplication: inside login request {}Thu Aug 20 17:37:44 GST 2020
+2020-08-20 17:37:44,697 INFO  [https-jsse-nio-6043-exec-3] CheckDeviceStatusService: Check device status url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/tabletstatus
+2020-08-20 17:37:44,701 INFO  [https-jsse-nio-6043-exec-3] CheckDeviceStatusService: queryParams-->{acquirer_id=[UAEPASS], name=[IDEMIA Identity & Security France], iemi=[357137091112234], model=[IDEMIA Identity & Security France MPH-MB001A ], uuid=[52ff72c9c927a2f0], version=[21]}
+2020-08-20 17:37:45,017 INFO  [https-jsse-nio-6043-exec-3] CheckDeviceStatusService: Device Status : {status=Y, acquirerid=UAEPASS, responsecode=0000, responsedata=Completed Successfully }
+2020-08-20 17:37:45,020 INFO  [https-jsse-nio-6043-exec-3] LoginService: inside login service {}Thu Aug 20 17:37:45 GST 2020
+2020-08-20 17:37:45,122 INFO  [https-jsse-nio-6043-exec-3] LoginService: Login url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/login
+2020-08-20 17:39:00,239 INFO  [https-jsse-nio-6043-exec-10] EKYCApplication: inside login request {}Thu Aug 20 17:39:00 GST 2020
+2020-08-20 17:39:00,405 INFO  [https-jsse-nio-6043-exec-10] CheckDeviceStatusService: Check device status url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/tabletstatus
+2020-08-20 17:39:00,413 INFO  [https-jsse-nio-6043-exec-10] CheckDeviceStatusService: queryParams-->{acquirer_id=[UAEPASS], name=[IDEMIA Identity & Security France], iemi=[357137091112234], model=[IDEMIA Identity & Security France MPH-MB001A ], uuid=[52ff72c9c927a2f0], version=[21]}
+2020-08-20 17:39:00,708 INFO  [https-jsse-nio-6043-exec-10] CheckDeviceStatusService: Device Status : {status=Y, acquirerid=UAEPASS, responsecode=0000, responsedata=Completed Successfully }
+2020-08-20 17:39:00,712 INFO  [https-jsse-nio-6043-exec-10] LoginService: inside login service {}Thu Aug 20 17:39:00 GST 2020
+2020-08-20 17:39:00,868 INFO  [https-jsse-nio-6043-exec-10] LoginService: Login url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/login
+2020-08-20 17:42:57,104 INFO  [https-jsse-nio-6043-exec-4] CheckDeviceStatusService: Check device status url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/tabletstatus
+2020-08-20 17:42:57,108 INFO  [https-jsse-nio-6043-exec-4] CheckDeviceStatusService: queryParams-->{acquirer_id=[UAEPASS], name=[IDEMIA Identity & Security France], iemi=[357137091112234], model=[IDEMIA Identity & Security France MPH-MB001A], uuid=[52ff72c9c927a2f0], version=[21]}
+2020-08-20 17:42:57,335 INFO  [https-jsse-nio-6043-exec-4] CheckDeviceStatusService: Device Status : {status=Y, acquirerid=UAEPASS, responsecode=0000, responsedata=Completed Successfully }
+2020-08-20 17:42:57,338 INFO  [https-jsse-nio-6043-exec-4] RegistrationService: inside register service {}Thu Aug 20 17:42:57 GST 2020
+2020-08-20 17:42:57,594 INFO  [https-jsse-nio-6043-exec-4] RegistrationService: Registration url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/register
+2020-08-20 17:42:59,001 INFO  [https-jsse-nio-6043-exec-4] RegistrationService: output-->{"registrationid":"571","responsecode":"0000","responsedata":"Completed Successfully "}
+2020-08-20 17:42:59,006 INFO  [https-jsse-nio-6043-exec-4] EKYCApplication: Registration API response-->{statuscode=000, message=Completed Successfully , status=true}
+2020-08-20 17:55:39,903 INFO  [https-jsse-nio-6043-exec-3] EKYCApplication: inside login request {}Thu Aug 20 17:55:39 GST 2020
+2020-08-20 17:55:40,026 INFO  [https-jsse-nio-6043-exec-3] CheckDeviceStatusService: Check device status url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/tabletstatus
+2020-08-20 17:55:40,029 INFO  [https-jsse-nio-6043-exec-3] CheckDeviceStatusService: queryParams-->{acquirer_id=[UAEPASS], name=[IDEMIA Identity & Security France], iemi=[357137091112234], model=[IDEMIA Identity & Security France MPH-MB001A ], uuid=[52ff72c9c927a2f0], version=[21]}
+2020-08-20 17:55:40,255 INFO  [https-jsse-nio-6043-exec-3] CheckDeviceStatusService: Device Status : {status=Y, acquirerid=UAEPASS, responsecode=0000, responsedata=Completed Successfully }
+2020-08-20 17:55:40,258 INFO  [https-jsse-nio-6043-exec-3] LoginService: inside login service {}Thu Aug 20 17:55:40 GST 2020
+2020-08-20 17:55:40,361 INFO  [https-jsse-nio-6043-exec-3] LoginService: Login url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/login
+2020-08-20 18:03:31,958 INFO  [https-jsse-nio-6043-exec-8] EKYCApplication: inside login request {}Thu Aug 20 18:03:31 GST 2020
+2020-08-20 18:03:32,064 INFO  [https-jsse-nio-6043-exec-8] CheckDeviceStatusService: Check device status url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/tabletstatus
+2020-08-20 18:03:32,068 INFO  [https-jsse-nio-6043-exec-8] CheckDeviceStatusService: queryParams-->{acquirer_id=[UAEPASS], name=[IDEMIA Identity & Security France], iemi=[357137091112234], model=[IDEMIA Identity & Security France MPH-MB001A ], uuid=[52ff72c9c927a2f0], version=[21]}
+2020-08-20 18:03:32,310 INFO  [https-jsse-nio-6043-exec-8] CheckDeviceStatusService: Device Status : {status=Y, acquirerid=UAEPASS, responsecode=0000, responsedata=Completed Successfully }
+2020-08-20 18:03:32,313 INFO  [https-jsse-nio-6043-exec-8] LoginService: inside login service {}Thu Aug 20 18:03:32 GST 2020
+2020-08-20 18:03:32,414 INFO  [https-jsse-nio-6043-exec-8] LoginService: Login url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/login
+2020-08-20 18:05:00,967 INFO  [https-jsse-nio-6043-exec-2] EKYCApplication: inside login request {}Thu Aug 20 18:05:00 GST 2020
+2020-08-20 18:05:01,114 INFO  [https-jsse-nio-6043-exec-2] CheckDeviceStatusService: Check device status url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/tabletstatus
+2020-08-20 18:05:01,118 INFO  [https-jsse-nio-6043-exec-2] CheckDeviceStatusService: queryParams-->{acquirer_id=[UAEPASS], name=[IDEMIA Identity & Security France], iemi=[357137091112234], model=[IDEMIA Identity & Security France MPH-MB001A ], uuid=[52ff72c9c927a2f0], version=[21]}
+2020-08-20 18:05:01,326 INFO  [https-jsse-nio-6043-exec-2] CheckDeviceStatusService: Device Status : {status=Y, acquirerid=UAEPASS, responsecode=0000, responsedata=Completed Successfully }
+2020-08-20 18:05:01,330 INFO  [https-jsse-nio-6043-exec-2] LoginService: inside login service {}Thu Aug 20 18:05:01 GST 2020
+2020-08-20 18:05:01,431 INFO  [https-jsse-nio-6043-exec-2] LoginService: Login url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/login
+2020-08-20 18:05:42,315 INFO  [https-jsse-nio-6043-exec-9] CheckDeviceStatusService: Check device status url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/tabletstatus
+2020-08-20 18:05:42,320 INFO  [https-jsse-nio-6043-exec-9] CheckDeviceStatusService: queryParams-->{acquirer_id=[UAEPASS], name=[IDEMIA Identity & Security France], iemi=[357137091112234], model=[IDEMIA Identity & Security France MPH-MB001A], uuid=[52ff72c9c927a2f0], version=[21]}
+2020-08-20 18:05:42,519 INFO  [https-jsse-nio-6043-exec-9] CheckDeviceStatusService: Device Status : {status=Y, acquirerid=UAEPASS, responsecode=0000, responsedata=Completed Successfully }
+2020-08-20 18:05:42,523 INFO  [https-jsse-nio-6043-exec-9] RegistrationService: inside register service {}Thu Aug 20 18:05:42 GST 2020
+2020-08-20 18:05:42,685 INFO  [https-jsse-nio-6043-exec-9] RegistrationService: Registration url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/register
+2020-08-20 18:05:43,895 INFO  [https-jsse-nio-6043-exec-9] RegistrationService: output-->{"registrationid":"572","responsecode":"0000","responsedata":"Completed Successfully "}
+2020-08-20 18:05:43,901 INFO  [https-jsse-nio-6043-exec-9] EKYCApplication: Registration API response-->{statuscode=000, message=Completed Successfully , status=true}
+2020-08-20 18:05:58,887 INFO  [https-jsse-nio-6043-exec-4] EKYCApplication: inside login request {}Thu Aug 20 18:05:58 GST 2020
+2020-08-20 18:05:59,002 INFO  [https-jsse-nio-6043-exec-4] CheckDeviceStatusService: Check device status url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/tabletstatus
+2020-08-20 18:05:59,006 INFO  [https-jsse-nio-6043-exec-4] CheckDeviceStatusService: queryParams-->{acquirer_id=[UAEPASS], name=[IDEMIA Identity & Security France], iemi=[357137091112234], model=[IDEMIA Identity & Security France MPH-MB001A ], uuid=[52ff72c9c927a2f0], version=[21]}
+2020-08-20 18:05:59,220 INFO  [https-jsse-nio-6043-exec-4] CheckDeviceStatusService: Device Status : {status=Y, acquirerid=UAEPASS, responsecode=0000, responsedata=Completed Successfully }
+2020-08-20 18:05:59,223 INFO  [https-jsse-nio-6043-exec-4] LoginService: inside login service {}Thu Aug 20 18:05:59 GST 2020
+2020-08-20 18:05:59,318 INFO  [https-jsse-nio-6043-exec-4] LoginService: Login url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/login
+2020-08-20 18:07:33,329 INFO  [https-jsse-nio-6043-exec-8] CheckDeviceStatusService: Check device status url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/tabletstatus
+2020-08-20 18:07:33,332 INFO  [https-jsse-nio-6043-exec-8] CheckDeviceStatusService: queryParams-->{acquirer_id=[UAEPASS], name=[IDEMIA Identity & Security France], iemi=[357137091112234], model=[IDEMIA Identity & Security France MPH-MB001A], uuid=[52ff72c9c927a2f0], version=[21]}
+2020-08-20 18:07:33,539 INFO  [https-jsse-nio-6043-exec-8] CheckDeviceStatusService: Device Status : {status=Y, acquirerid=UAEPASS, responsecode=0000, responsedata=Completed Successfully }
+2020-08-20 18:07:33,542 INFO  [https-jsse-nio-6043-exec-8] RegistrationService: inside register service {}Thu Aug 20 18:07:33 GST 2020
+2020-08-20 18:07:33,746 INFO  [https-jsse-nio-6043-exec-8] RegistrationService: Registration url : https://172.31.1.221:9043/ords/afexremit/ekyc/v1/register
+2020-08-20 18:07:34,969 INFO  [https-jsse-nio-6043-exec-8] RegistrationService: output-->{"registrationid":"573","responsecode":"0000","responsedata":"Completed Successfully "}
+2020-08-20 18:07:34,973 INFO  [https-jsse-nio-6043-exec-8] EKYCApplication: Registration API response-->{statuscode=000, message=Completed Successfully , status=true}

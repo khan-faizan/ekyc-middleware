@@ -1,0 +1,42 @@
+#rcorners2 {
+border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 20px;
+    width: 500px;
+    text-align: center;
+    height: auto;
+    margin: auto;
+    margin-top: 60px;
+}
+
+#imagelogo{
+	width: 400px;
+	height:150px;
+}
+
+#loginbutton{
+	width: 300px;
+	height:50px;
+}
+
+.fa-check-circle{
+	font-size: 50px;
+    color: green;
+}
+
+.fa-exclamation-triangle{
+	font-size: 50px;
+    color: red;
+}
+
+#requestdiv{
+	display:block;
+}
+
+#progressdiv{
+	display:block;
+}
+
+#successdiv{
+	display:block;
+}

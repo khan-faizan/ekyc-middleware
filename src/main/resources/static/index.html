@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Alfardan</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="icon" href="https://alfardanexchange.com/wp-content/themes/alfardan/images/favicon.png"
+	 type="image/icon type" />
+
+
+<link href="../static/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link href="../static/css/fontawesome.css"
+	th:href="@{/css/fontawesome.css}" rel="stylesheet" />
+<link href="../static/css/style.css" th:href="@{/css/style.css}"
+	rel="stylesheet" />
+
+
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+
+</head>
+<body>
+
+	<div id="requestdiv">
+		<div id="rcorners2">
+			<img id="imagelogo" src="content/images/logo.png" />
+			<hr />
+			<img id="loginbutton" src="content/images/uaepasslogin.png" />
+		</div>
+	</div>
+
+	<div id="progressdiv" style="display: none">
+		<div id="rcorners2">
+			<img id="imagelogo" src="content/images/logo.png" />
+
+			<div class="alert alert-info">
+				<strong>Alfardan exchange LLC is fetching information from
+					server.</strong>
+			</div>
+			<hr />
+			<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+
+		</div>
+	</div>
+
+	<div id="successdiv" style="display: none">
+		<div id="rcorners2">
+			<img id="imagelogo" src="content/images/logo.png" />
+
+			<div class="alert alert-warning">
+				<strong>Something Went Wrong !!</strong>
+			</div>
+			<hr />
+			<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+			<button type="button" id="gotohomepage" class="btn btn-success">Try
+				Again</button>
+		</div>
+	</div>
+
+</body>
+</html>
+

@@ -53,6 +53,7 @@ public class CheckDeviceStatusService {
 	
 	@Value("${afex.sharedKey}")
 	private String sharedKey;
+	
 	@Value("${afex.acquirerid}")
 	private String acquirerid;
 	
